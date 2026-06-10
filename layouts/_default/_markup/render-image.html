@@ -1,0 +1,16 @@
+{{- /* Resolve image URLs against baseURL (fixes subpath hosting like GitHub Pages)
+     and support ?width=... sizing params used across the content. */ -}}
+{{- $dest := .Destination -}}
+{{- $parts := split $dest "?" -}}
+{{- $src := index $parts 0 -}}
+{{- if hasPrefix $src "/" -}}{{- $src = relURL (strings.TrimPrefix "/" $src) -}}{{- end -}}
+{{- $style := "" -}}
+{{- if gt (len $parts) 1 -}}
+  {{- range split (index $parts 1) "&" -}}
+    {{- $kv := split . "=" -}}
+    {{- if and (eq (index $kv 0) "width") (gt (len $kv) 1) -}}
+      {{- $style = printf "max-width:100%%;width:%s;" (index $kv 1) -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+<img src="{{ $src }}" alt="{{ .Text }}"{{ with $style }} style="{{ . | safeCSS }}"{{ end }}>
