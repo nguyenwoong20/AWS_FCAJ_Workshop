@@ -1,5 +1,5 @@
 baseURL = "https://nguyenwoong20.github.io/AWS_FCAJ_Workshop/"
-relativeURLs = true
+relativeURLs = false
 canonifyURLs = false
 defaultContentLanguage = "en"
 
